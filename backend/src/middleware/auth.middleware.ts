@@ -6,7 +6,7 @@ export const userMiddleware = (
     res: Response,
     next: NextFunction,
 ) => {
-    const { token } = req.cookies.token;
+    const { token } = req.cookies;
 
     if (!token) {
         return res.status(401).json({
@@ -16,11 +16,11 @@ export const userMiddleware = (
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
-        console.log(decoded);
+
+        req.body.user = decoded;
+
         next();
     } catch (error) {
         return res.status(401).json({ message: "Invalid token" });
     }
-
-    next();
 };

@@ -1,14 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 import { z as zod } from "zod";
-import { User } from "../models/user.model";
-import { comparePass } from "../utils/crypto";
-import { generateToken } from "../utils/token";
-import prisma from "../utils/prisma";
+import { UserDetailInput } from "../types/user.type.js";
+import { comparePass } from "../utils/crypto.js";
+import { generateToken } from "../utils/token.js";
+import prisma from "../utils/prisma.js";
 
 const authController = {
     async login(req: Request, res: Response, next: NextFunction) {
         try {
-            const userDetails: User = req.body;
+            const userDetails: UserDetailInput = req.body;
             const user = await prisma.user.findFirst({
                 where: {
                     email: userDetails.email,
@@ -31,7 +31,10 @@ const authController = {
                 httpOnly: true,
             })
                 .status(200)
-                .json({ message: "Logged in successfully" });
+                .json({
+                    message: "Logged in successfully",
+                    myuserId: req.body.userId,
+                });
         } catch (error) {
             if (error instanceof zod.ZodError) {
                 res.status(400).json({ error: error.errors });

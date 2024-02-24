@@ -3,7 +3,8 @@ import fetchNotes from "./fetchNotes";
 import "./Notes.css";
 
 const Notes = () => {
-  let temp = fetchNotes();
+  // todo: add actual notes data
+  const temp = fetchNotes();
   return temp.map(data => {
     return (
       <Link className="hullo" to={`/note/${data.id}`} key={data.title}>

@@ -1,4 +1,8 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Profile from "./components/Profile/Profile";
@@ -25,9 +29,12 @@ const Home = () => {
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <Navigate to="/login" />,
+  },
+  {
+    path: "/home",
     element: <Home />,
   },
-
   {
     path: "/new/note",
     element: <NewNote />,

@@ -19,7 +19,7 @@
   border: hidden;
   outline: none;
   width: 35%;
-
+  margin-top: 11.5px;
   border-radius: 8px;
 }
 
@@ -47,6 +47,12 @@ textarea[name="note-text"] {
   color: #11111b;
   border-radius: 7px;
   background-color: #cba6f7;
+  padding: 0;
+  padding-bottom: 12px;
+  padding-top: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .dropdown-container {

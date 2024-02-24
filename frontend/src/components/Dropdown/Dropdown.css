@@ -52,6 +52,12 @@
   color: #11111b;
   border-radius: 7px;
   background-color: #cba6f7;
+  padding: 0;
+  padding-bottom: 12px;
+  padding-top: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 ::placeholder {

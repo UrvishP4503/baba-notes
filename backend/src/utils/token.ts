@@ -12,4 +12,5 @@ function generateToken(userInput: Payload): string {
     return token;
 }
 
+
 export { generateToken };
