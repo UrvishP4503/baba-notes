@@ -1,0 +1,10 @@
+* {
+  font-family: JetBrains Mono;
+  background-color: #11111b;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}

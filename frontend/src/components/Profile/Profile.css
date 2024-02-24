@@ -1,0 +1,14 @@
+.profile {
+  display: flex;
+  align-items: center;
+}
+
+.profile-pic {
+  margin: 10px;
+  border-radius: 55%;
+  width: 30%;
+}
+
+.profile-name {
+  margin: 10px;
+}

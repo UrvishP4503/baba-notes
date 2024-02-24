@@ -1,0 +1,50 @@
+.box {
+  border-style: solid;
+  border-radius: 15px;
+  border-color: #cba6f7;
+  width: 215px;
+  height: 255px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  overflow: hidden; /* Hide content that overflows the box */
+  margin: 20px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.hullo {
+  background-color: #181825;
+  text-decoration: none;
+}
+
+.title-text {
+  text-align: center;
+  margin: 9px;
+  width: 100%;
+  font-size: 20px;
+  font-weight: bold;
+  width: auto;
+  color: #cdd6f4;
+}
+
+.note-text {
+  width: 210px;
+  color: #94e2d5;
+  margin-top: 4px;
+}
+
+.note-category {
+  margin: 4px;
+  color: #cba6f7;
+}
+
+.created-at {
+  width: auto;
+  color: #cdd6f4;
+  margin: auto;
+  margin-right: 5px;
+  margin-bottom: 2px;
+  text-align: center;
+}

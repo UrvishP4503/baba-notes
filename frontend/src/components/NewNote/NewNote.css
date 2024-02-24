@@ -1,0 +1,62 @@
+.new-note {
+  height: 70%;
+  width: 99%;
+  align-items: center;
+}
+
+.head {
+  display: flex;
+  margin-left: 15%;
+  margin-right: 15%;
+  justify-content: space-between;
+  margin-top: 12px;
+  max-height: 40px;
+}
+
+.title {
+  background-color: #1e1e2e;
+  color: #94e2d5;
+  border: hidden;
+  outline: none;
+  width: 35%;
+
+  border-radius: 8px;
+}
+
+textarea[name="note-text"] {
+  background-color: #1e1e2e;
+  color: #94e2d5;
+  border: hidden;
+  width: 70%;
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-top: 20px;
+  height: 89vh;
+  min-height: 400px;
+  overflow: auto;
+  resize: none;
+  outline: none;
+
+  border-radius: 7px;
+}
+
+.save-button {
+  margin-top: 7px;
+  width: 150px;
+  height: 29px;
+  color: #11111b;
+  border-radius: 7px;
+  background-color: #cba6f7;
+}
+
+.dropdown-container {
+  z-index: 1;
+  position: relative;
+  bottom: 15px;
+  widows: 200px;
+}
+
+.selected-category {
+  color: #cba6f7;
+  margin-top: 10px;
+}
