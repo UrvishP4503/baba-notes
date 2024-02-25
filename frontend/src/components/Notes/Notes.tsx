@@ -3,7 +3,7 @@ import fetchNotes from "./fetchNotes";
 import "./Notes.css";
 
 const Notes = () => {
-  // todo: add actual notes data
+  // TODO: add actual notes data
   const temp = fetchNotes();
   return temp.map(data => {
     return (

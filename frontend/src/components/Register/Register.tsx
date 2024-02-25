@@ -17,6 +17,9 @@ const Register = () => {
     try {
       const res = await axios.post("http://127.0.0.1:3000/sighup", user);
       console.log(res.status);
+      if (res.status === 200) {
+        window.location.href = "/login";
+      }
     } catch (error) {
       console.log(`error`);
     }

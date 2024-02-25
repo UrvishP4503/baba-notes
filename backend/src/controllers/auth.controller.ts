@@ -5,10 +5,11 @@ import { comparePass } from "../utils/crypto.js";
 import { generateToken } from "../utils/token.js";
 import prisma from "../utils/prisma.js";
 
+let coutn = 0;
+
 const authController = {
     async login(req: Request, res: Response, next: NextFunction) {
         try {
-            console.log(req.body);
             const userDetails: UserDetailInput = req.body.user;
             const user = await prisma.user.findFirst({
                 where: {
@@ -28,15 +29,9 @@ const authController = {
 
             const token = generateToken({ id: user.id });
 
-            res.cookie("token", token, {
-                httpOnly: true,
-                secure: true,
-            })
-                .status(200)
-                .json({
-                    message: "Logged in successfully",
-                    myuserId: req.body.userId,
-                });
+            return res.cookie("token", token).status(200).json({
+                message: "Logged in successfully",
+            });
         } catch (error) {
             if (error instanceof zod.ZodError) {
                 res.status(400).json({ error: error.errors });
@@ -44,6 +39,11 @@ const authController = {
 
             next(error);
         }
+    },
+    // TODO: remove this this is just for testing
+    async hi(req: Request, res: Response) {
+        console.log(coutn++);
+        res.status(200).json({ hi: "hi", c: coutn });
     },
 };
 

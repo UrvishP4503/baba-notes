@@ -8,7 +8,7 @@ interface NewNote {
 }
 
 async function saveNote(noteData: NewNote): Promise<void> {
-  // todo: save note to database
+  // TODO: save note to database
   console.log(noteData);
 }
 

@@ -11,6 +11,21 @@ import Notes from "./components/Notes/Notes";
 import NewNote from "./components/NewNote/NewNote";
 
 import "./App.css";
+import axios from "axios";
+
+async function yohohoho() {
+  const data = await axios.get("http://127.0.0.1:3000/test", {
+    withCredentials: true,
+  });
+  console.log(data);
+}
+const Temp = () => {
+  return (
+    <div>
+      <button onClick={yohohoho}>click me</button>
+    </div>
+  );
+};
 
 const Home = () => {
   return (
@@ -54,6 +69,11 @@ const router = createBrowserRouter([
   {
     path: "/404",
     element: <div>404 not found</div>,
+  },
+  // TODO: remove this route this is just for testing
+  {
+    path: "/temp",
+    element: <Temp />,
   },
 ]);
 

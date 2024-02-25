@@ -15,10 +15,17 @@ const Login = () => {
       username: (document.getElementById("username") as HTMLInputElement).value,
     });
     try {
-      const res = await axios.post("http://127.0.0.1:3000/login", {
-        user,
-      });
-      console.log(res.status);
+      const res = await axios.post(
+        "http://127.0.0.1:3000/login",
+        { user },
+        {
+          withCredentials: true,
+        },
+      );
+
+      if (res.status === 200) {
+        window.location.href = "/home";
+      }
     } catch (error) {
       console.log(`error`);
     }
