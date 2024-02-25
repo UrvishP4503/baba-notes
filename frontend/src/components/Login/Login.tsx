@@ -15,7 +15,9 @@ const Login = () => {
       username: (document.getElementById("username") as HTMLInputElement).value,
     });
     try {
-      const res = await axios.post("http://127.0.0.1:3000/login", user);
+      const res = await axios.post("http://127.0.0.1:3000/login", {
+        user,
+      });
       console.log(res.status);
     } catch (error) {
       console.log(`error`);

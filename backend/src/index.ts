@@ -1,4 +1,5 @@
 import express, { Express, json } from "express";
+import cors from "cors";
 import cookieParser from "cookie-parser";
 import router from "./routes/route.js";
 
@@ -7,6 +8,7 @@ const app: Express = express();
 const PORT = process.env.PORT || 8000;
 
 app.use(json());
+app.use(cors());
 app.use(cookieParser());
 
 app.use(router);

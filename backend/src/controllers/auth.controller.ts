@@ -8,7 +8,8 @@ import prisma from "../utils/prisma.js";
 const authController = {
     async login(req: Request, res: Response, next: NextFunction) {
         try {
-            const userDetails: UserDetailInput = req.body;
+            console.log(req.body);
+            const userDetails: UserDetailInput = req.body.user;
             const user = await prisma.user.findFirst({
                 where: {
                     email: userDetails.email,
@@ -29,6 +30,7 @@ const authController = {
 
             res.cookie("token", token, {
                 httpOnly: true,
+                secure: true,
             })
                 .status(200)
                 .json({
