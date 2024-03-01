@@ -1,16 +1,20 @@
 import { Request, Response, NextFunction } from "express";
 import { z as zod } from "zod";
-import { UserDetailInput, UserEditInput } from "../types/user.type.js";
+import {
+    UserDetailInput,
+    UserEditInput,
+    userInputSchema,
+} from "../types/user.type.js";
 import { hash } from "../utils/crypto.js";
 import prisma from "../utils/prisma.js";
 
 const userController = {
     async makeUser(req: Request, res: Response, next: NextFunction) {
         try {
-            // validating user details here
-            const userDetails: UserDetailInput = req.body;
+            const userDetails: UserDetailInput = userInputSchema.parse(
+                req.body,
+            );
 
-            // check if the email already exists
             const existingUser = await prisma.user.findFirst({
                 where: {
                     email: userDetails.email,
@@ -20,8 +24,6 @@ const userController = {
             if (existingUser) {
                 return res.status(400).json({ error: "Email already exists" });
             }
-
-            // Create a new user
 
             const hashedPassword: string = hash(userDetails.password);
 
@@ -35,13 +37,14 @@ const userController = {
 
             const userOutput = { ...user, password: undefined };
 
-            res.json(userOutput);
+            res.status(201).json(userOutput);
         } catch (error) {
-            // If the error is a zod error
             if (error instanceof zod.ZodError) {
                 res.status(400).json({ error: error.errors });
             }
             next(error);
+        } finally {
+            await prisma.$disconnect();
         }
     },
 

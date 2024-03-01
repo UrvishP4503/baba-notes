@@ -12,21 +12,32 @@ import NewNote from "./components/NewNote/NewNote";
 
 import "./App.css";
 import axios from "axios";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 async function yohohoho() {
   const data = await axios.get("http://127.0.0.1:3000/test", {
     withCredentials: true,
   });
-  console.log(data);
+  console.log(data.status);
+}
+
+async function yohohoho2() {
+  await axios.get("http://127.0.0.1:3000/logout", {
+    withCredentials: true,
+  });
 }
 const Temp = () => {
   return (
     <div>
-      <button onClick={yohohoho}>click me</button>
+      <button onClick={yohohoho}>is logged in</button>
+      <button onClick={yohohoho2}>logout</button>
     </div>
   );
 };
 
+const queryClient = new QueryClient();
+
+// TODO: put this in a separate file
 const Home = () => {
   return (
     <div className="container">
@@ -78,7 +89,11 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  );
 };
 
 export default App;

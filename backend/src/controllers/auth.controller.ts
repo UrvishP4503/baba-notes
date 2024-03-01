@@ -29,21 +29,39 @@ const authController = {
 
             const token = generateToken({ id: user.id });
 
-            return res.cookie("token", token).status(200).json({
-                message: "Logged in successfully",
-            });
+            return res
+                .cookie("token", token, {
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: "none",
+                })
+                .status(200)
+                .json({
+                    message: "Logged in successfully",
+                });
         } catch (error) {
             if (error instanceof zod.ZodError) {
                 res.status(400).json({ error: error.errors });
             }
 
             next(error);
+        } finally {
+            await prisma.$disconnect();
         }
+    },
+    async logout(req: Request, res: Response) {
+        res.clearCookie("token", {
+            httpOnly: true,
+            sameSite: "none",
+            secure: true,
+        })
+            .status(200)
+            .json({ message: "Logged out" });
     },
     // TODO: remove this this is just for testing
     async hi(req: Request, res: Response) {
         console.log(coutn++);
-        res.status(200).json({ hi: "hi", c: coutn });
+        res.status(200).json({ hi: "hi", c: coutn, user: req.body.user });
     },
 };
 

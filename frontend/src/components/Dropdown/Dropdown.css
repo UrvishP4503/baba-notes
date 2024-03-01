@@ -109,4 +109,6 @@
   overflow: hidden;
   align-items: center;
   text-overflow: clip;
+  color: #cdd6f4;
+  margin-left: 3px;
 }

@@ -1,6 +1,6 @@
 import { z as zod } from "zod";
 
-const userInputSchema = zod.object({
+export const userInputSchema = zod.object({
     email: zod.string().email(),
     password: zod.string().min(6),
     name: zod.optional(zod.string().min(3)),

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-export const userMiddleware = (
+export const authMiddleware = (
     req: Request,
     res: Response,
     next: NextFunction,
@@ -21,6 +21,6 @@ export const userMiddleware = (
 
         next();
     } catch (error) {
-        return res.status(401).json({ message: "Invalid token" });
+        res.status(401).json({ message: "Invalid token" });
     }
 };

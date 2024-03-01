@@ -33,22 +33,28 @@ const Dropdown = () => {
                 placeholder="New Categories :"
                 className="dropdown-add-input"
               />
-              <button className="dropdown-add-button">ADD</button>
+              <button
+                className="dropdown-add-button"
+                onClick={handleNewCategory}
+              >
+                ADD
+              </button>
             </div>
           )}
+
           {!state.addNewCategory && (
             <div className="dropdown-category-list">
               <div className="dropdown-category-container">
                 <div className="dropdown-category-hashtag">#</div>
-                <div className="dropdown-category-name">WWWWWWWWWWWWWWW</div>
+                <div className="dropdown-category-name">WWWWWWWWWWWW</div>
               </div>
               <div className="dropdown-category-container">
                 <div className="dropdown-category-hashtag">#</div>
-                <div className="dropdown-category-name">WWWWWWWWWWWWWWW</div>
+                <div className="dropdown-category-name">WWWWWWWWWWWW</div>
               </div>
               <div className="dropdown-category-container">
                 <div className="dropdown-category-hashtag">#</div>
-                <div className="dropdown-category-name">WWWWWWWWWWWWWWW</div>
+                <div className="dropdown-category-name">WWWWWWWWWWWW</div>
               </div>
               <div className="dropdown-category-container">
                 <div className="dropdown-category-hashtag"> #</div>
