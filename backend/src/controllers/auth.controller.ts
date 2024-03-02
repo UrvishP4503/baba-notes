@@ -29,12 +29,11 @@ const authController = {
 
             const token = generateToken({ id: user.id });
 
-            return res
-                .cookie("token", token, {
-                    httpOnly: true,
-                    secure: true,
-                    sameSite: "none",
-                })
+            res.cookie("token", token, {
+                httpOnly: true,
+                secure: true,
+                sameSite: "none",
+            })
                 .status(200)
                 .json({
                     message: "Logged in successfully",
