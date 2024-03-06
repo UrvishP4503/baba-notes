@@ -44,8 +44,6 @@ const authController = {
             }
 
             next(error);
-        } finally {
-            await prisma.$disconnect();
         }
     },
     async logout(req: Request, res: Response) {

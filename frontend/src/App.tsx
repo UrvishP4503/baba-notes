@@ -12,7 +12,7 @@ import NewNote from "./components/NewNote/NewNote";
 
 import "./App.css";
 import axios from "axios";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 async function yohohoho() {
   const data = await axios.get("http://127.0.0.1:3000/test", {

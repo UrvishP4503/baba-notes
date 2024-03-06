@@ -65,8 +65,6 @@ const categoryController = {
             res.status(200).json({ category: categories });
         } catch (error) {
             next(error);
-        } finally {
-            await prisma.$disconnect();
         }
     },
     async updateCategory(req: Request, res: Response, next: NextFunction) {
@@ -98,8 +96,6 @@ const categoryController = {
             });
         } catch (error) {
             next(error);
-        } finally {
-            await prisma.$disconnect();
         }
     },
 
@@ -126,8 +122,6 @@ const categoryController = {
             res.status(204).json({ message: "Category deleted successfully" });
         } catch (error) {
             next(error);
-        } finally {
-            await prisma.$disconnect();
         }
     },
 };

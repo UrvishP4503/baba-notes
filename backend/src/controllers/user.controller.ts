@@ -43,8 +43,6 @@ const userController = {
                 res.status(400).json({ error: error.errors });
             }
             next(error);
-        } finally {
-            await prisma.$disconnect();
         }
     },
 

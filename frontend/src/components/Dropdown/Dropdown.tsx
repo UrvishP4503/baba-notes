@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "./Dropdown.css";
-import { useMutation, useQuery, QueryClient } from "react-query";
-import { getUserCategories } from "./fetchCategories";
+import { useMutation, useQuery, QueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -11,28 +10,41 @@ interface Category {
   userId: string;
 }
 
-const makeNewCategory = async (category: string) => {
-  return await axios.post(
-    "http://127.0.0.1:3000/category",
-    { category },
-    { withCredentials: true },
-  );
+const makeNewCategory = async (category: { category: string }) => {
+  return await axios.post("http://127.0.0.1:3000/category", category, {
+    withCredentials: true,
+  });
 };
 
+const getUserCategories = async () => {
+  return await axios.get("http://127.0.0.1:3000/category", {
+    withCredentials: true,
+  });
+};
 const queryClient = new QueryClient();
 
 const Dropdown = () => {
-  const [state, setState] = useState({ isOpen: false, addNewCategory: false });
+  const [state, setState] = useState({
+    isOpen: false,
+    addNewCategory: false,
+    categories: [],
+  });
 
   const { data, isError, isLoading } = useQuery({
     queryKey: ["category"],
     queryFn: getUserCategories,
-    enabled: !state.addNewCategory,
-    cacheTime: 120000,
-    staleTime: 120000,
   });
 
-  const { mutate } = useMutation(makeNewCategory);
+  if (!isError && !isLoading) {
+    setState(prevState => ({ ...prevState, categories: data?.data }));
+  }
+
+  const { mutate } = useMutation({
+    mutationFn: makeNewCategory,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["category"] });
+    },
+  });
 
   const handleClickOpen = () => {
     setState(prevState => ({ ...prevState, isOpen: !prevState.isOpen }));
@@ -45,17 +57,16 @@ const Dropdown = () => {
     }));
   };
 
-  const addNewCategory = () => {
-    const newCategory = document.querySelector(
-      ".dropdown-add-input",
-    ) as HTMLInputElement;
-
-    if (newCategory.value !== "") {
-      console.log(newCategory.value);
-      mutate(newCategory.value);
-      queryClient.invalidateQueries("category");
-
-      handleNewCategory();
+  const handleAddNewCategory = () => {
+    const newCategory = (
+      document.querySelector(".dropdown-add-input") as HTMLInputElement
+    ).value;
+    if (newCategory) {
+      mutate(newCategory, {
+        onSuccess: () => {
+          setState(prevState => ({ ...prevState, addNewCategory: false }));
+        },
+      });
     }
   };
 
@@ -80,7 +91,10 @@ const Dropdown = () => {
                 placeholder="New Categories :"
                 className="dropdown-add-input"
               />
-              <button className="dropdown-add-button" onClick={addNewCategory}>
+              <button
+                className="dropdown-add-button"
+                onClick={handleAddNewCategory}
+              >
                 ADD
               </button>
             </div>
@@ -92,7 +106,7 @@ const Dropdown = () => {
             <div>Error</div>
           ) : (
             <div>
-              {data?.data.category.map((category: Category) => {
+              {state.categories.map((category: Category) => {
                 return (
                   <Link
                     to={`/category/${category.id}`} // TODO: Impliment this
