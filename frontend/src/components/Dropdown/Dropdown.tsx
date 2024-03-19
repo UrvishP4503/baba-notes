@@ -10,25 +10,27 @@ interface Category {
   userId: string;
 }
 
-const makeNewCategory = async (category: { category: string }) => {
-  return await axios.post("http://127.0.0.1:3000/category", category, {
-    withCredentials: true,
-  });
-};
-
-const getUserCategories = async () => {
-  return await axios.get("http://127.0.0.1:3000/category", {
-    withCredentials: true,
-  });
-};
-const queryClient = new QueryClient();
-
 const Dropdown = () => {
   const [state, setState] = useState({
     isOpen: false,
     addNewCategory: false,
     categories: [],
   });
+
+  const queryClient = new QueryClient();
+
+  const makeNewCategory = async (category: { category: string }) => {
+    const data = await axios.post("http://127.0.0.1:3000/category", category, {
+      withCredentials: true,
+    });
+    return data.data;
+  };
+
+  const getUserCategories = async () => {
+    return await axios.get("http://127.0.0.1:3000/category", {
+      withCredentials: true,
+    });
+  };
 
   const { data, isError, isLoading } = useQuery({
     queryKey: ["category"],
@@ -39,7 +41,7 @@ const Dropdown = () => {
     setState(prevState => ({ ...prevState, categories: data?.data }));
   }
 
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn: makeNewCategory,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["category"] });
@@ -57,16 +59,13 @@ const Dropdown = () => {
     }));
   };
 
-  const handleAddNewCategory = () => {
-    const newCategory = (
-      document.querySelector(".dropdown-add-input") as HTMLInputElement
-    ).value;
-    if (newCategory) {
-      mutate(newCategory, {
-        onSuccess: () => {
-          setState(prevState => ({ ...prevState, addNewCategory: false }));
-        },
-      });
+  const handleAddNewCategory = async () => {
+    const category = document.querySelector(
+      ".dropdown-add-input",
+    ) as HTMLInputElement;
+    if (category.value) {
+      await mutateAsync({ category: category.value });
+      category.value = "";
     }
   };
 
